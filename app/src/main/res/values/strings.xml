@@ -1,0 +1,166 @@
+<resources>
+    <string name="app_name">UPI Unified Expense Tracker</string>
+    
+    <!-- System & Errors -->
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_db">Unable to access database.</string>
+    <string name="error_security">Secure storage operation failed.</string>
+    <string name="error_parser">Failed to parse transaction message.</string>
+    
+    <!-- Navigation & Core UI Labels -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_analytics">Analytics</string>
+    <string name="nav_settings">Settings</string>
+    
+    <!-- Showcase and Dashboard Labels -->
+    <string name="status_title">Architecture Foundation status</string>
+    <string name="status_subtitle">UPI Unified Expense Tracker</string>
+    <string name="status_verified">Verified Stable</string>
+    <string name="status_hilt_ok">Dagger Hilt injection verified</string>
+    <string name="status_repo_ok">Expense repository contract registered</string>
+    <string name="status_secure_ok">Secure storage contract initialized</string>
+    <string name="status_dispatcher_ok">Standard dispatcher provider bound</string>
+    <string name="status_theme_label">Theme system: Emerald Slate M3 Theme</string>
+    <string name="status_india_fmt">Indian localization ready (Date, Currency ₹, Numbers)</string>
+
+    <!-- Onboarding Strings -->
+    <string name="onboarding_btn_next">Next</string>
+    <string name="onboarding_btn_get_started">Get Started</string>
+    <string name="onboarding_btn_skip">Skip</string>
+    
+    <string name="onboarding_s1_title">100% Private Offline Ledger</string>
+    <string name="onboarding_s1_desc">Your finances, fully private. We don\'t ask for your bank login, nor do we request dangerous SMS permissions. Your data stays securely on your phone.</string>
+    
+    <string name="onboarding_s2_title">Sleek Notification Parsing</string>
+    <string name="onboarding_s2_desc">We parse incoming push notifications from apps like GPay, PhonePe, and Paytm on-the-fly to automatically construct your transaction ledger, offline.</string>
+    
+    <string name="onboarding_s3_title">Ready to Automate?</string>
+    <string name="onboarding_s3_desc">To automatically map expenses as they occur, enable Notification Access on the next screen. No database details or transaction texts ever leave this device.</string>
+
+    <!-- Permissions Screen -->
+    <string name="perm_title">Notification Access</string>
+    <string name="perm_status">Permission Status: %s</string>
+    <string name="perm_status_granted">GRANTED</string>
+    <string name="perm_status_denied">DENIED</string>
+    <string name="perm_explanation">This app requires Notification Listener Access to capture and parse offline transaction alerts from UPI apps. Without this, automatic tracking cannot function.</string>
+    <string name="perm_btn_grant">Enable Notification Access</string>
+    <string name="perm_btn_refresh">Check Status</string>
+    <string name="perm_btn_continue">Continue to App</string>
+    
+    <!-- Privacy Screen -->
+    <string name="privacy_title">Privacy Pledge</string>
+    <string name="privacy_header">Your Financial Data is Sacred</string>
+    <string name="privacy_no_internet">No Internet required to run the app</string>
+    <string name="privacy_no_sms">No SMS permissions requested</string>
+    <string name="privacy_no_bank">No Bank login details required</string>
+    <string name="privacy_no_contacts">No Contacts or location access requested</string>
+    <string name="privacy_no_cloud">Zero cloud sync. 100% offline database</string>
+    <string name="privacy_footer">This is an open, client-side offline ledger designed for security-conscious Indian users.</string>
+
+    <!-- Battery Optimization -->
+    <string name="battery_title">Battery Optimization (Optional)</string>
+    <string name="battery_desc">Modern Android devices put background apps to sleep to save battery, which can delay or block UPI notification detection. For uninterrupted offline tracking, you may optionally exempt the app from battery optimization.</string>
+    <string name="battery_btn_exempt">Disable Battery Optimization</string>
+    <string name="battery_oem_guide_title">Device-Specific Instructions</string>
+    <string name="battery_oem_select_brand">Select your device manufacturer:</string>
+
+    <!-- Settings Main Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance_title">Appearance</string>
+    <string name="settings_appearance_desc">Theme, Material You, visual style</string>
+    <string name="settings_notifications_title">Notification Parsing</string>
+    <string name="settings_notifications_desc">Listener status, test notifications</string>
+    <string name="settings_data_title">Data Management</string>
+    <string name="settings_data_desc">Stats, clear, backup, restore</string>
+    <string name="settings_privacy_title">Privacy Pledge</string>
+    <string name="settings_privacy_desc">100% Offline, bank-level security</string>
+    <string name="settings_about_title">About</string>
+    <string name="settings_about_desc">Version, developer details, licenses</string>
+    <string name="settings_developer_title">Developer Options</string>
+    <string name="settings_developer_desc">Parser logs, database inspector, rules</string>
+
+    <!-- Appearance Settings Screen -->
+    <string name="appearance_title">Appearance Settings</string>
+    <string name="appearance_theme_mode">Theme Mode</string>
+    <string name="appearance_theme_system">System Default</string>
+    <string name="appearance_theme_light">Light Theme</string>
+    <string name="appearance_theme_dark">Dark Theme</string>
+    <string name="appearance_material_you_title">Material You (Dynamic Colors)</string>
+    <string name="appearance_material_you_desc">Use colors derived from wallpaper if available (Android 12+)</string>
+    <string name="appearance_language_title">App Language</string>
+    <string name="appearance_language_desc">Select your preferred localization</string>
+    <string name="appearance_lang_en">English</string>
+    <string name="appearance_lang_hi">Hindi (हिन्दी)</string>
+
+    <!-- Data Management Settings Screen -->
+    <string name="data_title">Data Management</string>
+    <string name="data_stat_transactions">Total Transactions</string>
+    <string name="data_stat_sent">Total Debit (Sent)</string>
+    <string name="data_stat_received">Total Credit (Received)</string>
+    <string name="data_stat_db_size">Database Size (Approx)</string>
+    <string name="data_stat_db_version">Database Version</string>
+    <string name="data_btn_clear_transactions">Clear All Transactions</string>
+    <string name="data_btn_clear_desc">Deletes all UPI expenses but keeps app preferences intact.</string>
+    <string name="data_btn_delete_all">Delete All Data &amp; Reset</string>
+    <string name="data_btn_delete_desc">Wipes all expenses, custom settings, and resets onboarding.</string>
+    <string name="data_confirm_title">Are you absolutely sure?</string>
+    <string name="data_confirm_clear_msg">This will permanently delete all captured UPI transactions. This action is irreversible.</string>
+    <string name="data_confirm_delete_all_msg">This will wipe the database and clear all app preferences. The app will close and restart in first-launch mode.</string>
+    <string name="data_btn_cancel">Cancel</string>
+    <string name="data_btn_confirm">Proceed</string>
+    <string name="data_undo_snack">Transactions cleared successfully.</string>
+    <string name="data_undo_btn">Undo</string>
+
+    <!-- About Settings Screen -->
+    <string name="about_title">About App</string>
+    <string name="about_dev_name">Developer Name</string>
+    <string name="about_dev_value">Google AI Studio</string>
+    <string name="about_version_title">App Version</string>
+    <string name="about_version_code_title">Version Code</string>
+    <string name="about_build_type">Build Type</string>
+    <string name="about_licenses_title">Open Source Licenses</string>
+    <string name="about_rate_title">Rate App</string>
+    <string name="about_rate_desc">Support development by rating on Play Store</string>
+    <string name="about_share_title">Share App</string>
+    <string name="about_share_desc">Recommend this offline ledger to others</string>
+    <string name="about_whats_new_title">What\'s New</string>
+    <string name="about_whats_new_desc">View recent updates and feature additions</string>
+    <string name="about_license_dialog_title">Open Source Software</string>
+    <string name="about_license_dialog_close">Close</string>
+    <string name="about_whats_new_dialog_title">What\'s New in 1.0</string>
+    <string name="about_whats_new_dialog_text">• 100% private offline transaction tracking\n• Real-time notification-based parsing for GPay, Paytm &amp; PhonePe\n• Interactive dashboard with M3 visuals\n• Safe Data Management tools (Export, local clean, undo support)\n• Dynamic Emerald Slate and Material You themes</string>
+
+    <!-- Developer Settings Screen -->
+    <string name="dev_title">Developer Options</string>
+    <string name="dev_sec_logs">Logs &amp; Diagnostic Views</string>
+    <string name="dev_log_parser">Parser Logs</string>
+    <string name="dev_log_notification">Notification Listener Logs</string>
+    <string name="dev_raw_notifications">Raw Notifications Viewer</string>
+    <string name="dev_sec_db">Database Information</string>
+    <string name="dev_btn_clear_logs">Clear Diagnostic Logs</string>
+    <string name="dev_btn_export_logs">Export Logs</string>
+    <string name="dev_room_shortcuts">Room Database Shortcuts</string>
+    <string name="dev_room_shortcuts_desc">Mock and inspect schema tables directly</string>
+    <string name="dev_logs_cleared">Logs cleared from memory</string>
+    <string name="dev_logs_exported">Logs exported to clipboard successfully</string>
+    <string name="dev_no_logs">No diagnostic logs captured yet.</string>
+
+    <!-- Report Export Strings -->
+    <string name="export_title">Export Reports</string>
+    <string name="export_format_label">Select Format</string>
+    <string name="export_range_label">Define Date Range</string>
+    <string name="export_preset_all">All Time</string>
+    <string name="export_preset_this_month">This Month</string>
+    <string name="export_preset_last_month">Last Month</string>
+    <string name="export_preset_last_30_days">Last 30 Days</string>
+    <string name="export_preset_custom">Custom Range</string>
+    <string name="export_preview_label">Preview Summary</string>
+    <string name="export_btn_save">Save to Device</string>
+    <string name="export_btn_share">Share Report</string>
+    <string name="export_progress_generating">Generating offline report...</string>
+    <string name="export_success_title">Export Successful</string>
+    <string name="export_success_msg">Your report has been successfully generated completely offline.</string>
+    <string name="export_btn_open">Open File</string>
+    <string name="export_btn_close">Dismiss</string>
+    <string name="export_error_title">Export Failed</string>
+</resources>

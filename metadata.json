@@ -1,0 +1,6 @@
+{
+  "name": "UPI Unified Expense Tracker",
+  "description": "Production-ready Clean Architecture foundation for a unified UPI expense tracking application.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
