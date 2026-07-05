@@ -40,6 +40,10 @@ class AppContainer(private val context: Context) {
         SharedPreferencesSecureStorage(context)
     }
 
+    val databaseEncryptionManager: com.example.core.security.DatabaseEncryptionManager by lazy {
+        com.example.core.security.DatabaseEncryptionManager(secureStorage)
+    }
+
     val settingsRepository: SettingsRepository by lazy {
         SettingsRepositoryImpl(secureStorage)
     }
@@ -142,5 +146,21 @@ class AppContainer(private val context: Context) {
 
     val exportRepository: com.example.domain.repository.ExportRepository by lazy {
         com.example.data.repository.ExportRepositoryImpl(expenseDao)
+    }
+
+    val analyticsRepository: com.example.domain.repository.AnalyticsRepository by lazy {
+        com.example.data.repository.AnalyticsRepositoryImpl(expenseDao)
+    }
+
+    val backupRestoreRepository: com.example.domain.repository.BackupRestoreRepository by lazy {
+        com.example.data.repository.BackupRestoreRepositoryImpl(context, appDatabase)
+    }
+
+    val adRepository: com.example.domain.repository.AdRepository by lazy {
+        com.example.data.repository.AdRepositoryImpl(context)
+    }
+
+    val adManager: com.example.core.admob.AdManager by lazy {
+        com.example.core.admob.AdManager(context, adRepository, logger)
     }
 }

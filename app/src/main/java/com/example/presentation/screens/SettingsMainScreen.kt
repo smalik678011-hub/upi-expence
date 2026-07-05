@@ -31,11 +31,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun SettingsMainScreen(
     viewModel: SettingsViewModel,
+    adManager: com.example.core.admob.AdManager,
+    adRepository: com.example.domain.repository.AdRepository,
     onNavigateToAppearance: () -> Unit,
     onNavigateToPrivacy: () -> Unit,
     onNavigateToAbout: () -> Unit,
     onNavigateToDeveloper: () -> Unit,
     onNavigateToExport: () -> Unit,
+    onNavigateToAnalytics: () -> Unit,
+    onNavigateToBackupRestore: () -> Unit,
+    onNavigateToAds: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -275,6 +280,24 @@ fun SettingsMainScreen(
                 testTag = "pref_export_reports_button"
             )
 
+            // Analytics Card
+            PreferenceItemCard(
+                title = "Analytics & Insights",
+                subtitle = "Visualize spending patterns, daily/weekly trends, and dynamic offline insights.",
+                icon = Icons.Default.BarChart,
+                onClick = onNavigateToAnalytics,
+                testTag = "pref_analytics_insights_button"
+            )
+
+            // Backup & Restore Card
+            PreferenceItemCard(
+                title = "Offline Backup & Restore",
+                subtitle = "Securely backup and restore all offline logs, preferences, and configs locally.",
+                icon = Icons.Default.SettingsBackupRestore,
+                onClick = onNavigateToBackupRestore,
+                testTag = "pref_backup_restore_button"
+            )
+
             // Data actions
             PreferenceItemCard(
                 title = stringResource(R.string.data_btn_clear_transactions),
@@ -300,6 +323,13 @@ fun SettingsMainScreen(
                 onClick = onNavigateToPrivacy,
                 testTag = "pref_privacy_button"
             )
+            PreferenceItemCard(
+                title = "Ad Preferences",
+                subtitle = "Configure ad personalization, privacy guidelines, or simulate ad-free premium mode.",
+                icon = Icons.Default.AdsClick,
+                onClick = onNavigateToAds,
+                testTag = "pref_ads_button"
+            )
 
             // --- SECTION 5: ABOUT ---
             PreferenceCategoryHeader(title = stringResource(R.string.settings_about_title))
@@ -322,6 +352,12 @@ fun SettingsMainScreen(
                     testTag = "pref_developer_button"
                 )
             }
+
+            com.example.presentation.components.AdBanner(
+                adManager = adManager,
+                adRepository = adRepository,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
         }

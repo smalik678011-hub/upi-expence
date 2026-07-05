@@ -7,6 +7,14 @@ import androidx.room.Query
 import com.example.data.database.entity.ExpenseDbEntity
 import kotlinx.coroutines.flow.Flow
 
+data class ExpenseAnalyticsProjection(
+    val amount: Double,
+    val uType: String,
+    val dateLong: Long,
+    val accountOrBank: String?,
+    val merchantName: String
+)
+
 @Dao
 interface ExpenseDao {
     @Query("SELECT * FROM expenses ORDER BY dateLong DESC")
@@ -15,8 +23,32 @@ interface ExpenseDao {
     @Query("SELECT * FROM expenses WHERE id = :id")
     suspend fun getExpenseById(id: String): ExpenseDbEntity?
 
+    @Query("SELECT amount, uType, dateLong, accountOrBank, merchantName FROM expenses WHERE status = 'SUCCESS'")
+    suspend fun getAnalyticsProjection(): List<ExpenseAnalyticsProjection>
+
+    @Query("""
+        SELECT amount, uType, dateLong, accountOrBank, merchantName 
+        FROM expenses 
+        WHERE (dateLong >= :startDate OR :startDate = 0)
+          AND (dateLong <= :endDate OR :endDate = 0)
+          AND (accountOrBank = :sourceApp OR :sourceApp IS NULL)
+          AND (uType = :uType OR :uType IS NULL)
+          AND (amount >= :minAmount OR :minAmount = 0.0)
+          AND (amount <= :maxAmount OR :maxAmount = 0.0)
+          AND status = 'SUCCESS'
+    """)
+    suspend fun getAnalyticsProjectionFiltered(
+        startDate: Long,
+        endDate: Long,
+        sourceApp: String?,
+        uType: String?,
+        minAmount: Double,
+        maxAmount: Double
+    ): List<ExpenseAnalyticsProjection>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExpense(expense: ExpenseDbEntity)
+
 
     @Query("DELETE FROM expenses WHERE id = :id")
     suspend fun deleteExpenseById(id: String)

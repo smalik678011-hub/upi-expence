@@ -11,18 +11,34 @@ interface Logger {
 
 class AndroidLogger : Logger {
     override fun d(tag: String, message: String) {
-        Log.d(tag, message)
+        if (com.example.BuildConfig.DEBUG) {
+            Log.d(tag, message)
+        }
     }
 
     override fun i(tag: String, message: String) {
-        Log.i(tag, message)
+        if (com.example.BuildConfig.DEBUG) {
+            Log.i(tag, message)
+        }
     }
 
     override fun w(tag: String, message: String, throwable: Throwable?) {
-        Log.w(tag, message, throwable)
+        if (com.example.BuildConfig.DEBUG) {
+            Log.w(tag, message, throwable)
+        } else {
+            Log.w(tag, sanitize(message), throwable)
+        }
     }
 
     override fun e(tag: String, message: String, throwable: Throwable?) {
-        Log.e(tag, message, throwable)
+        if (com.example.BuildConfig.DEBUG) {
+            Log.e(tag, message, throwable)
+        } else {
+            Log.e(tag, sanitize(message), throwable)
+        }
+    }
+
+    private fun sanitize(message: String): String {
+        return message.replace(Regex("\\d{4,}"), "[REDACTED]")
     }
 }

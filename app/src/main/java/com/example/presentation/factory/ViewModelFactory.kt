@@ -75,6 +75,22 @@ class ViewModelFactory(
                     exportRepository = appContainer.exportRepository
                 ) as T
             }
+            modelClass.isAssignableFrom(com.example.presentation.screens.AnalyticsViewModel::class.java) -> {
+                com.example.presentation.screens.AnalyticsViewModel(
+                    analyticsRepository = appContainer.analyticsRepository,
+                    expenseRepository = appContainer.expenseRepository
+                ) as T
+            }
+            modelClass.isAssignableFrom(com.example.presentation.screens.BackupRestoreViewModel::class.java) -> {
+                com.example.presentation.screens.BackupRestoreViewModel(
+                    backupRestoreRepository = appContainer.backupRestoreRepository
+                ) as T
+            }
+            modelClass.isAssignableFrom(com.example.presentation.screens.AdViewModel::class.java) -> {
+                com.example.presentation.screens.AdViewModel(
+                    adRepository = appContainer.adRepository
+                ) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

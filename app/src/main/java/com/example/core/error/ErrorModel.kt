@@ -6,7 +6,7 @@ import com.example.R
 data class ErrorModel(
     val code: String,
     val message: String,
-    @StringRes val localizedMsgRes: Int = R.string.error_generic,
+    @param:StringRes val localizedMsgRes: Int = R.string.error_generic,
     val throwable: Throwable? = null
 ) {
     companion object {

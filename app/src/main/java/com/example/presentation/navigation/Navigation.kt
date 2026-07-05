@@ -24,12 +24,15 @@ sealed class Screen(val route: String) {
     object SettingsAppearance : Screen("settings_appearance")
     object SettingsAbout : Screen("settings_about")
     object SettingsDeveloper : Screen("settings_developer")
+    object SettingsAds : Screen("settings_ads")
     object ParserValidation : Screen("parser_validation")
     object TransactionExplorer : Screen("transaction_explorer")
     object TransactionDetails : Screen("transaction_details/{id}") {
         fun createRoute(id: String) = "transaction_details/$id"
     }
     object ExportReport : Screen("export_report")
+    object Analytics : Screen("analytics")
+    object BackupRestore : Screen("backup_restore")
 }
 
 @Composable
@@ -106,6 +109,8 @@ fun AppNavigation(
             val viewModel: HomeViewModel = viewModel(factory = factory)
             HomeScreen(
                 viewModel = viewModel,
+                adManager = appContainer.adManager,
+                adRepository = appContainer.adRepository,
                 onNavigateToDashboard = {
                     navController.navigate(Screen.Settings.route)
                 },
@@ -117,14 +122,20 @@ fun AppNavigation(
                 },
                 onNavigateToDetails = { id ->
                     navController.navigate(Screen.TransactionDetails.createRoute(id))
+                },
+                onNavigateToAnalytics = {
+                    navController.navigate(Screen.Analytics.route)
                 }
             )
         }
 
         composable(Screen.Settings.route) {
             val settingsViewModel: SettingsViewModel = viewModel(factory = factory)
+            val activity = LocalContext.current as? android.app.Activity
             SettingsMainScreen(
                 viewModel = settingsViewModel,
+                adManager = appContainer.adManager,
+                adRepository = appContainer.adRepository,
                 onNavigateToAppearance = {
                     navController.navigate(Screen.SettingsAppearance.route)
                 },
@@ -140,18 +151,40 @@ fun AppNavigation(
                 onNavigateToExport = {
                     navController.navigate(Screen.ExportReport.route)
                 },
+                onNavigateToAnalytics = {
+                    navController.navigate(Screen.Analytics.route)
+                },
+                onNavigateToBackupRestore = {
+                    navController.navigate(Screen.BackupRestore.route)
+                },
+                onNavigateToAds = {
+                    navController.navigate(Screen.SettingsAds.route)
+                },
                 onNavigateBack = {
-                    navController.popBackStack()
+                    if (activity != null) {
+                        appContainer.adManager.checkAndShowInterstitial(activity) {
+                            navController.popBackStack()
+                        }
+                    } else {
+                        navController.popBackStack()
+                    }
                 }
             )
         }
 
         composable(Screen.ExportReport.route) {
             val exportViewModel: ExportViewModel = viewModel(factory = factory)
+            val activity = LocalContext.current as? android.app.Activity
             ExportScreen(
                 viewModel = exportViewModel,
                 onNavigateBack = {
-                    navController.popBackStack()
+                    if (activity != null) {
+                        appContainer.adManager.checkAndShowInterstitial(activity) {
+                            navController.popBackStack()
+                        }
+                    } else {
+                        navController.popBackStack()
+                    }
                 }
             )
         }
@@ -223,6 +256,43 @@ fun AppNavigation(
             val parserValidationViewModel: ParserValidationViewModel = viewModel(factory = factory)
             ParserValidationScreen(
                 viewModel = parserValidationViewModel,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(Screen.Analytics.route) {
+            val analyticsViewModel: AnalyticsViewModel = viewModel(factory = factory)
+            val activity = LocalContext.current as? android.app.Activity
+            AnalyticsScreen(
+                viewModel = analyticsViewModel,
+                onNavigateBack = {
+                    if (activity != null) {
+                        appContainer.adManager.checkAndShowInterstitial(activity) {
+                            navController.popBackStack()
+                        }
+                    } else {
+                        navController.popBackStack()
+                    }
+                }
+            )
+        }
+
+        composable(Screen.BackupRestore.route) {
+            val backupRestoreViewModel: BackupRestoreViewModel = viewModel(factory = factory)
+            BackupRestoreScreen(
+                viewModel = backupRestoreViewModel,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(Screen.SettingsAds.route) {
+            val adViewModel: AdViewModel = viewModel(factory = factory)
+            SettingsAdsScreen(
+                viewModel = adViewModel,
                 onNavigateBack = {
                     navController.popBackStack()
                 }

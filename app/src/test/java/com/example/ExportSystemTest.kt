@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.data.database.dao.ExpenseDao
+import com.example.data.database.dao.ExpenseAnalyticsProjection
 import com.example.data.database.entity.ExpenseDbEntity
 import com.example.data.repository.ExportRepositoryImpl
 import com.example.presentation.screens.ExportFormat
@@ -58,6 +59,16 @@ class ExportSystemTest {
         override suspend fun getTotalReceivedInDateRange(startDate: Long, endDate: Long): Double? {
             return items.filter { it.uType == "CREDIT" && it.dateLong in startDate..endDate }.sumOf { it.amount }
         }
+
+        override suspend fun getAnalyticsProjection(): List<ExpenseAnalyticsProjection> = emptyList()
+        override suspend fun getAnalyticsProjectionFiltered(
+            startDate: Long,
+            endDate: Long,
+            sourceApp: String?,
+            uType: String?,
+            minAmount: Double,
+            maxAmount: Double
+        ): List<ExpenseAnalyticsProjection> = emptyList()
     }
 
     @Test

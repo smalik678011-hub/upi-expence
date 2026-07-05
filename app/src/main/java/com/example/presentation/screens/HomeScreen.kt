@@ -37,10 +37,13 @@ import java.util.Date
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
+    adManager: com.example.core.admob.AdManager,
+    adRepository: com.example.domain.repository.AdRepository,
     onNavigateToDashboard: () -> Unit,
     onNavigateToPrivacy: () -> Unit,
     onNavigateToExplorer: () -> Unit,
     onNavigateToDetails: (String) -> Unit,
+    onNavigateToAnalytics: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -61,7 +64,21 @@ fun HomeScreen(
                     )
                 },
                 actions = {
-                    // Privacy Policy Lock Icon
+                    // Analytics Button
+                    IconButton(
+                        onClick = onNavigateToAnalytics,
+                        modifier = Modifier
+                            .testTag("nav_analytics_button")
+                            .minimumInteractiveComponentSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.BarChart,
+                            contentDescription = "Analytics & Insights",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    // Privacy Pledge Lock Icon
                     IconButton(
                         onClick = onNavigateToPrivacy,
                         modifier = Modifier
@@ -93,6 +110,13 @@ fun HomeScreen(
                     containerColor = MaterialTheme.colorScheme.background,
                     titleContentColor = MaterialTheme.colorScheme.onBackground
                 )
+            )
+        },
+        bottomBar = {
+            com.example.presentation.components.AdBanner(
+                adManager = adManager,
+                adRepository = adRepository,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
         },
         contentWindowInsets = WindowInsets.safeDrawing
