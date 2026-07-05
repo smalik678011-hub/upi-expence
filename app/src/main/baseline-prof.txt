@@ -1,33 +1,12 @@
 # Baseline Profile for UPI Unified Expense Tracker
 
-# Essential application classes
-HScom/example/UpiExpenseApplication;-><init>()V
-HScom/example/MainActivity;-><init>()V
-HScom/example/core/di/AppContainer;-><init>(Landroid/content/Context;)V
+# Baseline Profile for UPI Unified Expense Tracker
+Lcom/example/UpiExpenseApplication;
+Lcom/example/MainActivity;
+Lcom/example/core/di/AppContainer;
+Lcom/example/presentation/navigation/Screen;
+Lcom/example/presentation/screens/HomeScreenKt;
+Lcom/example/presentation/screens/HomeViewModel;
+Lcom/example/presentation/screens/FoundationDashboardScreenKt;
+Lcom/example/presentation/screens/FoundationDashboardViewModel;
 
-# App ViewModels & Navigation
-HScom/example/presentation/navigation/Screen;
-HScom/example/presentation/navigation/NavigationKt;
-HScom/example/presentation/screens/HomeScreenKt;
-HScom/example/presentation/screens/HomeViewModel;
-HScom/example/presentation/screens/FoundationDashboardScreenKt;
-HScom/example/presentation/screens/FoundationDashboardViewModel;
-
-# Jetpack Compose core runtime
-HPLandroidx/compose/runtime/Composer;
-HPLandroidx/compose/runtime/ComposerImpl;
-HPLandroidx/compose/runtime/RecomposeScopeImpl;
-HPLandroidx/compose/foundation/layout/BoxKt;
-HPLandroidx/compose/foundation/layout/ColumnKt;
-HPLandroidx/compose/foundation/layout/RowKt;
-HPLandroidx/compose/material3/ScaffoldKt;
-HPLandroidx/compose/ui/platform/AndroidComposeView;
-
-# Room Database Core
-HPLandroidx/room/RoomDatabase;
-HPLcom/example/data/database/AppDatabase;
-HPLcom/example/data/database/dao/ExpenseDao;
-
-# Kotlin Coroutines
-HPLkotlinx/coroutines/flow/StateFlow;
-HPLkotlinx/coroutines/flow/MutableStateFlow;

@@ -15,8 +15,13 @@ import com.example.presentation.screens.HomeUiState
 import com.example.presentation.screens.HomeViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.resetMain
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -26,6 +31,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.util.Date
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34])
 class PipelineIntegrationTest {
@@ -59,11 +65,15 @@ class PipelineIntegrationTest {
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         val context = ApplicationProvider.getApplicationContext<Context>()
         
         // 1. Database & Repository Setup
+        val directExecutor = java.util.concurrent.Executor { command -> command.run() }
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .allowMainThreadQueries()
+            .setQueryExecutor(directExecutor)
+            .setTransactionExecutor(directExecutor)
             .build()
         expenseDao = db.expenseDao()
         expenseRepository = ExpenseRepositoryImpl(expenseDao)
@@ -100,6 +110,7 @@ class PipelineIntegrationTest {
     @After
     fun tearDown() {
         db.close()
+        Dispatchers.resetMain()
     }
 
     private suspend fun simulateIncomingNotification(notification: NotificationData): Boolean {
@@ -118,6 +129,9 @@ class PipelineIntegrationTest {
 
     @Test
     fun testValidTransactionNotificationIntegrationFlow() = runBlocking {
+        // Active subscriber to satisfy WhileSubscribed(5000) constraint
+        val collectJob = launch { viewModel.uiState.collect {} }
+
         // Create an incoming GPay transaction notification
         val notification = NotificationData(
             packageName = NotificationSource.GOOGLE_PAY.packageName,
@@ -135,6 +149,21 @@ class PipelineIntegrationTest {
         val processed = simulateIncomingNotification(notification)
         assertTrue("Notification should be processed successfully", processed)
 
+        // Force Room table invalidation tracker to check for updates synchronously
+        db.invalidationTracker.refreshVersionsSync()
+
+        // Idle the looper to execute asynchronous Flow notifications & ViewModel updates
+        org.robolectric.shadows.ShadowLooper.idleMainLooper()
+
+        // Wait up to 2 seconds for the state to update to Success
+        var state = viewModel.uiState.value
+        val start = System.currentTimeMillis()
+        while (state !is HomeUiState.Success && System.currentTimeMillis() - start < 2000) {
+            Thread.sleep(50)
+            org.robolectric.shadows.ShadowLooper.idleMainLooper()
+            state = viewModel.uiState.value
+        }
+
         // Verify Data Stored Correctly in DB
         val dbCount = expenseDao.getExpensesCount()
         assertEquals(1, dbCount)
@@ -144,13 +173,14 @@ class PipelineIntegrationTest {
         assertEquals("Pizza Corner", expenseInDb.merchantName)
 
         // Verify UI Reflects Data Reactively
-        val state = viewModel.uiState.first { it !is HomeUiState.Loading }
-        assertTrue("UI state should be Success", state is HomeUiState.Success)
+        assertTrue("UI state should be Success, but was: $state", state is HomeUiState.Success)
         val successState = state as HomeUiState.Success
         assertEquals(1, successState.expenses.size)
         assertEquals(450.0, successState.totalSent, 0.001)
         assertEquals(0.0, successState.totalReceived, 0.001)
         assertEquals(-450.0, successState.netBalance, 0.001)
+
+        collectJob.cancel()
     }
 
     @Test
@@ -184,6 +214,9 @@ class PipelineIntegrationTest {
 
     @Test
     fun testNonTransactionNotificationIntegrationFlow() = runBlocking {
+        // Active subscriber to satisfy WhileSubscribed(5000) constraint
+        val collectJob = launch { viewModel.uiState.collect {} }
+
         // Non-transaction / Promotional message
         val promotionalNotification = NotificationData(
             packageName = NotificationSource.GOOGLE_PAY.packageName,
@@ -200,12 +233,28 @@ class PipelineIntegrationTest {
         val processed = simulateIncomingNotification(promotionalNotification)
         assertFalse("Promotional message should be ignored and not processed", processed)
 
+        // Force Room table invalidation tracker to check for updates synchronously
+        db.invalidationTracker.refreshVersionsSync()
+
+        // Idle the looper to execute asynchronous Flow notifications & ViewModel updates
+        org.robolectric.shadows.ShadowLooper.idleMainLooper()
+
+        // Wait up to 2 seconds for the state to update to Empty
+        var state = viewModel.uiState.value
+        val start = System.currentTimeMillis()
+        while (state !is HomeUiState.Empty && System.currentTimeMillis() - start < 2000) {
+            Thread.sleep(50)
+            org.robolectric.shadows.ShadowLooper.idleMainLooper()
+            state = viewModel.uiState.value
+        }
+
         // Verify nothing stored in database
         val dbCount = expenseDao.getExpensesCount()
         assertEquals(0, dbCount)
 
         // Verify UI state remains Empty
-        val state = viewModel.uiState.first { it !is HomeUiState.Loading }
-        assertEquals(HomeUiState.Empty, state)
+        assertEquals("UI state should be Empty, but was: $state", HomeUiState.Empty, state)
+
+        collectJob.cancel()
     }
 }

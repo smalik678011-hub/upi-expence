@@ -12,5 +12,19 @@ class UpiExpenseApplication : Application() {
         super.onCreate()
         container = AppContainer(this)
         container.adManager.initialize()
+        setupGlobalCrashHandler()
+    }
+
+    private fun setupGlobalCrashHandler() {
+        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            try {
+                container.logger.e("CrashHandler", "Uncaught exception on thread: ${thread.name}", throwable)
+            } catch (e: Exception) {
+                // Fail-safe to avoid crash in handler
+            } finally {
+                defaultHandler?.uncaughtException(thread, throwable)
+            }
+        }
     }
 }
