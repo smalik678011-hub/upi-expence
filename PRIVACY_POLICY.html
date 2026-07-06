@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - UPI Unified Expense Tracker</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e1b4b;
+            --accent: #38bdf8;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-light: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-light);
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid var(--border);
+        }
+
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            font-weight: 800;
+        }
+
+        .last-updated {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            color: #14532d;
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box strong {
+            color: #166534;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--bg-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .container {
+                padding: 2rem 1.25rem;
+                border-radius: 8px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">₹</div>
+            <h1>UPI Unified Expense Tracker</h1>
+        </div>
+        <p class="last-updated">Last Updated: July 5, 2026</p>
+    </header>
+
+    <main>
+        <p>Your privacy is our highest priority. The <strong>UPI Unified Expense Tracker</strong> (referred to as "the App") is designed from the ground up as a fully <strong>offline-first, zero-leak</strong> application. We do not collect, transmit, or share your personal, financial, or behavioral data. This Privacy Policy outlines our strict data handling practices to reassure you of your absolute ownership over your data.</p>
+
+        <div class="highlight-box">
+            <p><strong>Core Privacy Guarantee:</strong> The App contains no tracking, cloud sync, or reporting backends. 100% of your data remains localized inside sandboxed private app storage. No financial identifiers leave your device.</p>
+        </div>
+
+        <h2>1. Executive Summary</h2>
+        <ul>
+            <li><strong>No Remote Transmission:</strong> No transaction records, parsed messages, or notification logs are ever transmitted to any remote servers.</li>
+            <li><strong>Strictly Local Storage:</strong> All financial records, categories, and analytics are stored locally on your device within a secured, sandboxed database.</li>
+            <li><strong>No SMS Permissions Required:</strong> The app does not request or use SMS permission (<code>READ_SMS</code> or <code>RECEIVE_SMS</code>). It uses on-device <strong>Notification Access</strong> to capture transaction messages securely.</li>
+            <li><strong>Complete User Control:</strong> You can delete, modify, export (CSV/JSON), or wipe your entire financial log history at any time without requiring remote account deletion.</li>
+        </ul>
+
+        <h2>2. Information Collection and Usage</h2>
+        
+        <h3>A. Notification Access & Parsing</h3>
+        <p><strong>How it works:</strong> The App utilizes Android's <code>NotificationListenerService</code> (which requires explicit user consent during setup) to listen for incoming notification broadcasts from standard UPI payments and banking applications.</p>
+        <p><strong>Processing:</strong> The notification body is parsed on-device in real-time using built-in, local regular expression patterns to extract the transaction amount, merchant name, transaction type (debit/credit), reference ID, and payment application name.</p>
+        <p><strong>Raw Data Disposal:</strong> The raw notification text is immediately discarded from RAM after parsing is complete. The raw text is <strong>never</strong> saved, logged, or shared.</p>
+
+        <h3>B. Device Information & Diagnostics</h3>
+        <p><strong>Log Management:</strong> The App maintains a minimal local-only system log wrapper for diagnosing issues.</p>
+        <p><strong>Privacy Hardening:</strong> If an error or warning is logged locally, all sensitive financial data (such as bank account digits, transaction amounts, and transaction reference numbers) is automatically obfuscated using local sanitization patterns (e.g., replacement with <code>[REDACTED]</code>).</p>
+        <p><strong>No Diagnostics Uploads:</strong> Local logs are stored in private app-specific storage and are never uploaded to any remote diagnostic services.</p>
+
+        <h3>C. Optional Integration (Google Mobile Ads)</h3>
+        <p>The App includes the Google Mobile Ads SDK (AdMob) to display non-intrusive banner advertisements.</p>
+        <ul>
+            <li><strong>No Financial Profiling:</strong> No local transaction history, total spend statistics, account names, or financial profiles are ever shared with the AdMob SDK or Google.</li>
+            <li><strong>User Control:</strong> You can easily opt-in or opt-out of personalized advertising via the App's <strong>Settings</strong> menu.</li>
+        </ul>
+
+        <h2>3. Data Storage, Security, and Encryption</h2>
+
+        <h3>A. SQLite Room Database</h3>
+        <p>All transaction details (date, amount, merchant, debit/credit type, reference code, status) are saved locally inside an encrypted SQLite/Room database.</p>
+        <p>The database is fully sandboxed inside the App's private internal storage (<code>/data/data/com.aistudio.upiexpense.ugpxty/databases/</code>), which is inaccessible to other applications.</p>
+
+        <h3>B. File Sharing & Exporting</h3>
+        <p>When you explicitly request to export your transaction ledger (as CSV, JSON, or PDF), the file is written to your private app-specific cache directory.</p>
+        <p>Sharing is facilitated via a secure Android <strong>FileProvider</strong> (<code>android:exported="false"</code>), which grants temporary, read-only permissions explicitly to the app you select (e.g., your email client or secure cloud drive) and is automatically revoked immediately after.</p>
+
+        <h2>4. Play Store Data Safety Disclosures</h2>
+        <p>In compliance with Google Play Developer Policies, we answer the Data Safety questionnaire as follows:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Data Collected?</strong></td>
+                    <td><strong>NO</strong></td>
+                    <td>The developer does not collect or store any of your data on any server.</td>
+                </tr>
+                <tr>
+                    <td><strong>Data Shared?</strong></td>
+                    <td><strong>NO</strong></td>
+                    <td>No personal or financial data is shared with any third-party.</td>
+                </tr>
+                <tr>
+                    <td><strong>Data Encrypted in Transit?</strong></td>
+                    <td><strong>YES / NOT APPLICABLE</strong></td>
+                    <td>Since no data is transmitted externally, there is no transit phase.</td>
+                </tr>
+                <tr>
+                    <td><strong>User Deletion Request?</strong></td>
+                    <td><strong>YES</strong></td>
+                    <td>You have full self-service control. You can clear or wipe your entire database from the App's settings instantly.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. Contact & Support</h2>
+        <p>If you have any questions, concerns, or feedback regarding our privacy practices, please contact us:</p>
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:smalik678011@gmail.com">smalik678011@gmail.com</a></li>
+            <li><strong>GitHub Pages/Project Support:</strong> <a href="https://github.com/smalik678011/upi-unified-expense-tracker" target="_blank">https://github.com/smalik678011/upi-unified-expense-tracker</a></li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 UPI Unified Expense Tracker. All rights reserved.</p>
+    </footer>
+</div>
+
+</body>
+</html>

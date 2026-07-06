@@ -244,11 +244,11 @@ class ParserValidationFramework(
         }
 
         // 3. Different notification payload that parses to identical transaction fields:
-        // E.g., different notification ID/Key, but same app, amount, and counterparty.
+        // E.g., different notification ID/Key, but same app, amount, counterparty, and reference number.
         val testNotif2 = NotificationData(
             packageName = "com.phonepe.app",
             title = "PhonePe",
-            text = "Paid Rs 350 to Sharma Grocery. Txn 999999999999", // Different txn ID in SMS, but matches signature
+            text = "Paid Rs 350 to Sharma Grocery. Txn 234567123456", // Same txn ID, matches signature
             bigText = null,
             postTime = System.currentTimeMillis() + 5000,
             notificationId = 67890,
@@ -261,6 +261,23 @@ class ParserValidationFramework(
         val parseResultAnother = parserEngine.parseNotification(testNotif2)
         if (parseResultAnother !is ParseResult.Ignored || !parseResultAnother.reason.contains("Duplicate parsed", ignoreCase = true)) {
             return Pair(false, "Failed to identify duplicate parsed transaction signature within sliding window. Got: $parseResultAnother")
+        }
+
+        // 4. Verify that a different transaction ID does NOT trigger duplicate detection
+        val testNotif3 = NotificationData(
+            packageName = "com.phonepe.app",
+            title = "PhonePe",
+            text = "Paid Rs 350 to Sharma Grocery. Txn 999999999999", // Different txn ID, should not match signature
+            bigText = null,
+            postTime = System.currentTimeMillis() + 10000,
+            notificationId = 11111,
+            notificationKey = "unique_key_phonepe_11111",
+            tag = null,
+            extras = emptyMap()
+        )
+        val parseResultDistinct = parserEngine.parseNotification(testNotif3)
+        if (parseResultDistinct !is ParseResult.Success) {
+            return Pair(false, "Falsely identified different transaction ID as duplicate parsed transaction signature within sliding window. Got: $parseResultDistinct")
         }
 
         return Pair(true, "All duplicate detection flows validated perfectly (Raw collision & parsed signature collision).")

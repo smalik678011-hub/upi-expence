@@ -301,4 +301,46 @@ class UniversalUpiParsingEngineTest {
         assertEquals("987654321098", expense.transactionRef)
         assertEquals("Google Pay", expense.accountOrBank)
     }
+
+    @Test
+    fun testDuplicateDetectorParsedWithAndWithoutReference() {
+        duplicateDetector.clearCache()
+
+        val baseTx = com.example.domain.model.ParsedTransaction(
+            amount = 150.0,
+            currency = "INR",
+            direction = TransactionDirection.SENT,
+            status = TransactionStatus.SUCCESS,
+            counterpartyName = "Amit Sharma",
+            transactionRef = "REF123456",
+            timestamp = System.currentTimeMillis(),
+            sourceApp = NotificationSource.GOOGLE_PAY,
+            rawNotification = "raw",
+            confidence = 1.0f
+        )
+
+        // 1. Initially, not duplicate
+        assertFalse(duplicateDetector.isDuplicateParsed(baseTx))
+        duplicateDetector.registerProcessedParsed(baseTx)
+
+        // 2. Same transaction (same reference) within 2 minutes: duplicate
+        assertTrue(duplicateDetector.isDuplicateParsed(baseTx))
+
+        // 3. Different reference, same amount, same counterparty: should NOT be duplicate
+        val distinctTx = baseTx.copy(transactionRef = "REF999999")
+        assertFalse(duplicateDetector.isDuplicateParsed(distinctTx))
+
+        // 4. Clean cache
+        duplicateDetector.clearCache()
+
+        // 5. Without reference (null / empty) should fall back to standard signature
+        val txNoRef1 = baseTx.copy(transactionRef = null)
+        val txNoRef2 = baseTx.copy(transactionRef = "  ")
+
+        assertFalse(duplicateDetector.isDuplicateParsed(txNoRef1))
+        duplicateDetector.registerProcessedParsed(txNoRef1)
+
+        // Same amount, same counterparty, both without reference within 2 minutes: duplicate
+        assertTrue(duplicateDetector.isDuplicateParsed(txNoRef2))
+    }
 }

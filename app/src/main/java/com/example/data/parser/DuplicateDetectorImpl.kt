@@ -43,12 +43,20 @@ class DuplicateDetectorImpl : DuplicateDetector {
         return false
     }
 
+    private fun getSignature(transaction: ParsedTransaction): String {
+        val ref = transaction.transactionRef?.trim()
+        return if (!ref.isNullOrEmpty()) {
+            "${transaction.sourceApp.packageName}|${transaction.amount}|${transaction.counterpartyName.lowercase().trim()}|$ref"
+        } else {
+            "${transaction.sourceApp.packageName}|${transaction.amount}|${transaction.counterpartyName.lowercase().trim()}|no_ref"
+        }
+    }
+
     override fun isDuplicateParsed(transaction: ParsedTransaction): Boolean {
         val now = System.currentTimeMillis()
         pruneOldEntries(now)
 
-        // Signature based on: Source App, Amount, and Counterparty Name
-        val signature = "${transaction.sourceApp.packageName}|${transaction.amount}|${transaction.counterpartyName.lowercase().trim()}"
+        val signature = getSignature(transaction)
         
         if (parsedSignatures.containsKey(signature)) {
             val prevTime = parsedSignatures[signature] ?: 0L
@@ -72,7 +80,7 @@ class DuplicateDetectorImpl : DuplicateDetector {
 
     override fun registerProcessedParsed(transaction: ParsedTransaction) {
         val now = System.currentTimeMillis()
-        val signature = "${transaction.sourceApp.packageName}|${transaction.amount}|${transaction.counterpartyName.lowercase().trim()}"
+        val signature = getSignature(transaction)
         parsedSignatures[signature] = now
     }
 
